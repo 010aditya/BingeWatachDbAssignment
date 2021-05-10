@@ -8,6 +8,7 @@ class BingeWatachDbAssignmentApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
