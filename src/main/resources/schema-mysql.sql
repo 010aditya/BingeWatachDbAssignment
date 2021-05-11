@@ -1,0 +1,14 @@
+--CREATE TABLE IF NOT EXISTS netflix_shows (
+----  show_id bigint NOT NULL,
+----cast varchar(1200),
+----country varchar(255),
+----date_added varchar(255),
+----description varchar(255),
+----director varchar(255),
+----duration varchar(255),
+----listed_in varchar(255),
+----rating varchar(255),
+----release_year varchar(255),
+----title varchar(255),
+----type varchar(255)
+----);

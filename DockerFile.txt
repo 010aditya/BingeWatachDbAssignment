@@ -1,0 +1,4 @@
+FROM openjdk:8-jdk-alpine
+MAINTAINER Aditya
+COPY target/bingeWatachDbAssignment-0.0.1.jar bingeWatachDbAssignment-0.0.1.jar
+ENTRYPOINT ["java","-jar","/bingeWatachDbAssignment-0.0.1.jar"]
