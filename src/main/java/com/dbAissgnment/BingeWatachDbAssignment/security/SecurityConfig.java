@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(filter)
                 .addFilterBefore(new ExceptionTranslationFilter(
-                                new Http403ForbiddenEntryPoint()),
+                                new Http401UnAutherizedEntryPoint()),
                         filter.getClass()
                 )
                 .authorizeRequests()
