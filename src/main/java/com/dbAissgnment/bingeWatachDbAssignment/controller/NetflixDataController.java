@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.xml.bind.DataBindingException;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +47,7 @@ public class NetflixDataController {
     @GetMapping(path = "netflix/getShowsByTitle/{title}")
     public @ResponseBody
     Iterable<NetflixDataModel> getUsersByTitle(@PathVariable String title) {
-        List<NetflixDataModel> listByTitle= netflixFilterService.getDataByType(netflixRepository.findAll(), title, null, null, 10);
+        List<NetflixDataModel> listByTitle= netflixFilterService.getDataByTitle(netflixRepository.findAll(), title, null, null, 10);
         if(listByTitle.isEmpty())
             throw new DataNotFoundException("title" + title);
         return listByTitle;

@@ -3,6 +3,7 @@ package com.dbAissgnment.bingeWatachDbAssignment.exception;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,4 +41,12 @@ public class customizedResponseEntitiyHandler extends ResponseEntityExceptionHan
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
 
     }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    protected ResponseEntity<Object> handleUnauthorizedException(UnauthorizedException ex,WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),  ex.getMessage(),request.getDescription(false));
+        return new ResponseEntity(exceptionResponse, HttpStatus.UNAUTHORIZED);
+
+    }
+
 }

@@ -11,7 +11,7 @@ public interface NetflixFilterService {
 
     List<NetflixDataModel> getDataByType(List<NetflixDataModel> inputList, String type, Date fromDate, Date toDate, long n);
 
-    List<NetflixDataModel> getDataByListedIn(List<NetflixDataModel> inputList, String listedIn, Date fromDate, Date toDate, long n);
+    List<NetflixDataModel> getDataByTitle(List<NetflixDataModel> inputList, String listedIn, Date fromDate, Date toDate, long n);
 
     List<NetflixDataModel> getDataByTypeAndCountry(List<NetflixDataModel> inputList, String type, String country, Date fromDate, Date toDate, long n);
 

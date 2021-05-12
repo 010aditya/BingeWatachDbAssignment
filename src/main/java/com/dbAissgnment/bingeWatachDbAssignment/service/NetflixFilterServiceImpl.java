@@ -20,10 +20,10 @@ public class NetflixFilterServiceImpl implements NetflixFilterService {
     }
 
     @Override
-    public List<NetflixDataModel> getDataByListedIn(List<NetflixDataModel> inputList, String listedIn, Date fromDate, Date toDate, long n) {
+    public List<NetflixDataModel> getDataByTitle(List<NetflixDataModel> inputList, String listedIn, Date fromDate, Date toDate, long n) {
         return inputList.stream()
-                .filter(x -> x.getListed_in() != null)
-                .filter(x -> x.getListed_in().equalsIgnoreCase(listedIn))
+                .filter(x -> x.getTitle() != null)
+                .filter(x -> x.getTitle().equalsIgnoreCase(listedIn))
                 .limit(n).collect(Collectors.toList());
     }
 
