@@ -18,4 +18,4 @@ services:
       - MYSQL_DATABASE=netflix
 
 networks:
-  bingeWatachDbAssignmentApplication: 
+  BingeWatachDbAssignmentApplication:
