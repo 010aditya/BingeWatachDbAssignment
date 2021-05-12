@@ -2,6 +2,7 @@ package com.dbAissgnment.bingeWatachDbAssignment.controller;
 
 import com.dbAissgnment.bingeWatachDbAssignment.aspectj.TrackExecutionTime;
 import com.dbAissgnment.bingeWatachDbAssignment.entity.NetflixRepository;
+import com.dbAissgnment.bingeWatachDbAssignment.exception.DataNotFoundException;
 import com.dbAissgnment.bingeWatachDbAssignment.model.NetflixDataModel;
 import com.dbAissgnment.bingeWatachDbAssignment.service.NetflixFilterService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.xml.bind.DataBindingException;
 import java.net.URI;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -45,13 +48,17 @@ public class NetflixDataController {
     @GetMapping(path = "netflix/getShowsByTitle/{title}")
     public @ResponseBody
     Iterable<NetflixDataModel> getUsersByTitle(@PathVariable String title) {
-        return netflixFilterService.getDataByType(netflixRepository.findAll(), title, null, null, 10);
+        List<NetflixDataModel> listByTitle= netflixFilterService.getDataByType(netflixRepository.findAll(), title, null, null, 10);
+        if(listByTitle.isEmpty())
+            throw new DataNotFoundException("title" + title);
+        return listByTitle;
 
     }
 
     @GetMapping(path = "netflix/getShowsByCountry/{country}")
     public @ResponseBody
     Iterable<NetflixDataModel> getUsersByCountry(@PathVariable String country) {
+
         return netflixFilterService.getDataByTypeAndCountry(netflixRepository.findAll(), country, country, null, null, 10);
 
     }

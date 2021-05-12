@@ -1,4 +1,4 @@
-package com.dbAissgnment.bingeWatachDbAssignment.config;
+package com.dbAissgnment.bingeWatachDbAssignment.config.batchconfig;
 
 import com.dbAissgnment.bingeWatachDbAssignment.model.NetflixDataModel;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,7 +11,7 @@ public class NeflixDataModelRowMapper implements RowMapper<NetflixDataModel> {
         @Override
         public NetflixDataModel mapRow(ResultSet rs, int rowNum) throws SQLException {
             NetflixDataModel NetflixDataModel = new NetflixDataModel();
-            NetflixDataModel.setShow_id(rs.getLong("show_id"));
+            NetflixDataModel.setShow_id(rs.getString("show_id"));
             NetflixDataModel.setType(rs.getString("type"));
             NetflixDataModel.setTitle(rs.getString("title"));
             NetflixDataModel.setDirector(rs.getString("director"));

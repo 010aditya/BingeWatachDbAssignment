@@ -1,8 +1,8 @@
-package com.dbAissgnment.bingeWatachDbAssignment.config;
+package com.dbAissgnment.bingeWatachDbAssignment.config.batchconfig;
 
 import com.dbAissgnment.bingeWatachDbAssignment.listner.JobCompletionNotificationListener;
 import com.dbAissgnment.bingeWatachDbAssignment.model.NetflixDataModel;
-import com.dbAissgnment.bingeWatachDbAssignment.processor.NetflixDataModelItemProcessor;
+import com.dbAissgnment.bingeWatachDbAssignment.processor.NetflixItemProcessor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -24,6 +24,8 @@ import org.springframework.core.io.ClassPathResource;
 
 import javax.sql.DataSource;
 
+import static com.dbAissgnment.bingeWatachDbAssignment.commons.Constants.PATTERN;
+
 @Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
@@ -42,7 +44,7 @@ public class BatchConfiguration {
         FlatFileItemReader<NetflixDataModel> itemReader = new FlatFileItemReader<>();
         itemReader.setLineMapper(lineMapper());
         itemReader.setLinesToSkip(1);
-        itemReader.setResource(new ClassPathResource("netflix_titles_withint.csv"));
+        itemReader.setResource(new ClassPathResource("netflix_titles.csv"));
         return itemReader;
     }
 
@@ -50,7 +52,7 @@ public class BatchConfiguration {
     @Bean
     public LineMapper<NetflixDataModel> lineMapper() {
         DefaultLineMapper<NetflixDataModel> lineMapper = new DefaultLineMapper<NetflixDataModel>();
-        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer(",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)");
+        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer(PATTERN);
         lineTokenizer.setDelimiter(",");
         lineTokenizer.setNames("show_id", "type", "title", "director", "cast", "country", "date_added",
                 "release_year", "rating", "duration", "listed_in", "description");
@@ -64,12 +66,12 @@ public class BatchConfiguration {
 
     @Bean
     public ItemProcessor<NetflixDataModel, NetflixDataModel> processorForDb() {
-        return new NetflixDataModelItemProcessor();
+        return new NetflixItemProcessor();
     }
 
     @Bean
-    public NetflixDataModelItemProcessor processor() {
-        return new NetflixDataModelItemProcessor();
+    public NetflixItemProcessor processor() {
+        return new NetflixItemProcessor();
     }
 
     @Bean
@@ -88,7 +90,7 @@ public class BatchConfiguration {
     public Job importCsvDataJob(JobCompletionNotificationListener listener) {
         return jobBuilderFactory.get("importCsvDataJob")
                 .incrementer(new RunIdIncrementer())
-                .listener(listener)
+                //.listener(listener)
                 .flow(step1())
                 .end()
                 .build();
@@ -99,7 +101,6 @@ public class BatchConfiguration {
         return stepBuilderFactory.get("step1")
                 .<NetflixDataModel, NetflixDataModel>chunk(200)
                 .reader(readerFromCsv())
-                //.processor((Function<? super NetflixDataModel, ? extends NetflixDataModel>) processor())
                 .writer(writerToDb())
                 .build();
     }

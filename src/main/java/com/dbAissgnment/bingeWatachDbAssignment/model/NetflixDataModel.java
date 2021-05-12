@@ -1,10 +1,11 @@
 package com.dbAissgnment.bingeWatachDbAssignment.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.dbAissgnment.bingeWatachDbAssignment.commons.DateUtil;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
+
 @Entity
 @Table(name = "netflix_shows")
 
@@ -12,8 +13,9 @@ public class NetflixDataModel implements Serializable {
 
     private static final long serialVersionUID = 6698795523537149496L;
 
-@Id
-    private Long show_id;
+    @Id
+    @Column(name = "show_id", unique = true, columnDefinition = "VARCHAR(100)")
+    private String show_id;
     private String type;
     private String title;
     private String director;
@@ -28,7 +30,10 @@ public class NetflixDataModel implements Serializable {
     private String description;
 
 
-    public NetflixDataModel(Long show_id, String type, String title, String director, String cast, String country, String dateAdded, String release_year, String rating, String duration, String listed_in, String description) {
+    public NetflixDataModel(String show_id, String type, String title,
+                            String director, String cast, String country,
+                            String dateAdded, String release_year, String rating,
+                            String duration, String listed_in, String description) {
         this.show_id = show_id;
         this.type = type;
         this.title = title;
@@ -46,12 +51,11 @@ public class NetflixDataModel implements Serializable {
     public NetflixDataModel() {
     }
 
-
-    public Long getShow_id() {
+    public String getShow_id() {
         return show_id;
     }
 
-    public void setShow_id(Long show_id) {
+    public void setShow_id(String show_id) {
         this.show_id = show_id;
     }
 
@@ -97,6 +101,10 @@ public class NetflixDataModel implements Serializable {
 
     public String getDate_added() {
         return date_added;
+    }
+
+    public Date getDate() {
+        return DateUtil.parseDate(getDate_added());
     }
 
     public void setDate_added(String date_added) {

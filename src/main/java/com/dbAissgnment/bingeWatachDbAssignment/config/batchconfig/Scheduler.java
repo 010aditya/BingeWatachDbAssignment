@@ -1,4 +1,4 @@
-package com.dbAissgnment.bingeWatachDbAssignment.config;
+package com.dbAissgnment.bingeWatachDbAssignment.config.batchconfig;
 
 
 import org.springframework.batch.core.*;
@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-@EnableScheduling
+/*@EnableScheduling*/
 public class Scheduler {
     @Autowired
     private JobLauncher jobLauncher;
@@ -20,14 +20,16 @@ public class Scheduler {
     @Autowired
     private Job job;
 
-    @Scheduled(cron="*/20 * * * * *")
+    @Scheduled(cron="*/10000 * * * * *")
     public void myScheduler(){
-        JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters();
+        JobParameters jobParameters = new JobParametersBuilder().addLong("time",
+                System.currentTimeMillis()).toJobParameters();
 
         try {
             JobExecution jobExecution = jobLauncher.run(job, jobParameters);
             System.out.println("Job's Status:::"+jobExecution.getStatus());
-        } catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException
+        } catch (JobExecutionAlreadyRunningException | JobRestartException
+                | JobInstanceAlreadyCompleteException
                 | JobParametersInvalidException e) {
             e.printStackTrace();
         }

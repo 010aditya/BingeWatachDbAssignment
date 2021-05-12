@@ -5,8 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 
-public class NetflixDataModelItemProcessor implements ItemProcessor<NetflixDataModel, NetflixDataModel> {
-    private static final Logger log = LoggerFactory.getLogger(NetflixDataModelItemProcessor.class);
+public class NetflixItemProcessor implements ItemProcessor<NetflixDataModel, NetflixDataModel> {
+    private static final Logger log = LoggerFactory.getLogger(NetflixItemProcessor.class);
 
     @Override
     public NetflixDataModel process(final NetflixDataModel netflixDataModel) throws Exception {

@@ -1,5 +1,6 @@
 package com.dbAissgnment.bingeWatachDbAssignment.service;
 
+import com.dbAissgnment.bingeWatachDbAssignment.commons.DateUtil;
 import com.dbAissgnment.bingeWatachDbAssignment.model.NetflixDataModel;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,10 @@ public class NetflixFilterServiceImpl implements NetflixFilterService {
 
     @Override
     public List<NetflixDataModel> getDataByListedIn(List<NetflixDataModel> inputList, String listedIn, Date fromDate, Date toDate, long n) {
-        /*return  inputList.stream()
-                .filter(x->x.getCountry() !=null)
-                .filter(x->x.getCountry().equalsIgnoreCase(listedIn))*/
-        return null;
+        return inputList.stream()
+                .filter(x -> x.getListed_in() != null)
+                .filter(x -> x.getListed_in().equalsIgnoreCase(listedIn))
+                .limit(n).collect(Collectors.toList());
     }
 
     @Override
@@ -31,15 +32,14 @@ public class NetflixFilterServiceImpl implements NetflixFilterService {
         return inputList.stream()
                 .filter(x -> x.getCountry() != null)
                 .filter(x -> x.getCountry().equalsIgnoreCase(country))
-                .limit(n)
-                .collect(Collectors.toList());
+                .limit(n).collect(Collectors.toList());
     }
 
     @Override
     public List<NetflixDataModel> getDataByDate(List<NetflixDataModel> inputList, Date fromDate, Date toDate, long n) {
         return inputList.stream()
                 .filter(x -> x.getDate_added() != null)
-                // .filter(x->x.getDateAdded().after(fromDate) && x.getDateAdded().before(toDate))
+                 .filter(x->x.getDate().after(fromDate) && x.getDate().before(toDate))
                 .limit(n)
                 .collect(Collectors.toList());
     }

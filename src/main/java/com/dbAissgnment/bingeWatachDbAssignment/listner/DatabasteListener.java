@@ -2,7 +2,7 @@ package com.dbAissgnment.bingeWatachDbAssignment.listner;
 
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 
-public class NetflixDbtoCsvJobListener extends JobExecutionListenerSupport {
+public class DatabasteListener extends JobExecutionListenerSupport {
 
 /*
     private static final Logger log = LoggerFactory.getLogger(JobCompletionNotificationListener.class);
@@ -10,7 +10,7 @@ public class NetflixDbtoCsvJobListener extends JobExecutionListenerSupport {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public NetflixDbtoCsvJobListener(JdbcTemplate jdbcTemplate) {
+    public DatabasteListener(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

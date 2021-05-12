@@ -7,6 +7,7 @@ import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jooq.JooqAutoConfiguration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,8 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 
     private final JdbcTemplate jdbcTemplate;
 
+
+
     @Autowired
     public JobCompletionNotificationListener(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -33,14 +36,11 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
         if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("!!! JOB FINISHED! Time to verify the results");
 
-            List<NetflixDataModel> results = jdbcTemplate.query("SELECT 'show_id', 'type' ,'title','director','cast','country','date_added','release_year','rating,duration','listed_in','description' FROM netflix_shows", new RowMapper<NetflixDataModel>() {
-                @Override
-                public NetflixDataModel mapRow(ResultSet rs, int row) throws SQLException {
-                    return new NetflixDataModel(rs.getLong(0), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)
+            List<NetflixDataModel> results = jdbcTemplate.query("SELECT show_id, type ,title,director,cast,country,date_added,release_year,rating,duration,listed_in,description FROM netflix_shows",
+                    (rs, row) -> new NetflixDataModel(rs.getString(0), rs.getString(1), rs.getString(2),
+                            rs.getString(3), rs.getString(4), rs.getString(5)
                             , rs.getString(6), rs.getString(7), rs.getString(8)
-                            , rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12));
-                }
-            });
+                            , rs.getString(9), rs.getString(10), rs.getString(11)));
 
             for (NetflixDataModel person : results) {
                 log.info("Found <" + person + "> in the database.");

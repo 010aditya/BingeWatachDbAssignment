@@ -1,4 +1,4 @@
-package com.dbAissgnment.bingeWatachDbAssignment.config;
+package com.dbAissgnment.bingeWatachDbAssignment.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
