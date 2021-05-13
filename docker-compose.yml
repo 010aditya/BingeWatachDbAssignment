@@ -1,21 +1,21 @@
-version: "3.1"
+version: "3.8"
 services:
-  bingeWatachDbAssignmentApplication:
+  bingeWatachDbAssignment:
     image: 010aditya/bingewatachdbassignment:0.0.1
     ports:
       - "8080:8080"
     networks:
-      - BingeWatachDbAssignmentApplication
+      - bingeWatachDbAssignmentApplication
     depends_on:
       - mysqldb
  
   mysqldb:
-    image: mysql:8
+    image: mysql:latest
     networks:
-      - BingeWatachDbAssignmentApplication
+      - bingeWatachDbAssignmentApplication
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=aditya
       - MYSQL_DATABASE=netflix
 
 networks:
-  BingeWatachDbAssignmentApplication:
+  bingeWatachDbAssignmentApplication:
